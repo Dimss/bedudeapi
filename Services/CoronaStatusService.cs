@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver.Core.Operations.ElementNameValidators;
 
 namespace BeDudeApi.Services
 {
@@ -24,7 +25,6 @@ namespace BeDudeApi.Services
 
             _coronaStatuses = database.GetCollection<CoronaStatus>(settings.CoronaStatusCollectionName);
             _logger = logger;
-
         }
 
         public List<CoronaStatus> Get()
@@ -32,24 +32,6 @@ namespace BeDudeApi.Services
             List<CoronaStatus> coronaData = _coronaStatuses.Find(coronaStatus => true).ToList();
             return coronaData;
         }
-
-        public List<CoronaSatausResponse> GetCoronaChartData()
-        {
-            List<CoronaSatausResponse> coronaStatuChartData = new List<CoronaSatausResponse>();
-            foreach (var coronaStatus in Get())
-            {
-                var date = coronaStatus.Date.Substring(0, coronaStatus.Date.IndexOf("T"));
-                coronaStatuChartData.Add(new CoronaSatausResponse(date, coronaStatus.Confirmed, "configmed"));
-                coronaStatuChartData.Add(new CoronaSatausResponse(date, coronaStatus.Active, "active"));
-                coronaStatuChartData.Add(new CoronaSatausResponse(date, coronaStatus.Deaths, "deaths"));
-                coronaStatuChartData.Add(new CoronaSatausResponse(date, coronaStatus.Recovered, "recovered"));
-            }
-
-            return coronaStatuChartData;
-
-        }
-
-
 
         public CoronaStatus Get(string id) =>
             _coronaStatuses.Find<CoronaStatus>(book => book.Id == id).FirstOrDefault();
@@ -65,36 +47,31 @@ namespace BeDudeApi.Services
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var streamTask = client.GetStreamAsync("https://api.covid19api.com/live/country/israel/status/confirmed");
-            var statuses = await JsonSerializer.DeserializeAsync<List<CoronaStatus>>(await streamTask);
-            var existingCoronaStataus = Get();
-            _logger.LogInformation("CoronsaStatuses count: " + existingCoronaStataus.Count);
-            if (existingCoronaStataus.Count == 0)
-            {
-                _logger.LogInformation("Empty statuses list, gonna import everything");
-                foreach (var status in statuses)
-                {
-                    var res = Create(status);
-                    _logger.LogInformation("Saving new CoronaStatus: " + res.Date);
 
-                }
-            }
-            else
+            foreach (var statusName in new List<string>() {"confirmed", "recovered", "deaths"})
             {
-                foreach (var status in statuses)
+                var apiUrl = "https://api.covid19api.com/dayone/country/israel/status/" + statusName;
+                var streamTask = client.GetStreamAsync(apiUrl);
+                var statuses = await JsonSerializer.DeserializeAsync<List<CoronaStatus>>(await streamTask);
+                var existingStatuses = _coronaStatuses.Find(_ => true).ToList();
+                if (existingStatuses.Count == 0)
                 {
-                    var insertNewStatus = true;
-                    foreach (var existingStatus in existingCoronaStataus)
+                    _coronaStatuses.InsertMany(statuses);
+                }
+                else
+                {
+                    foreach (var status in statuses)
                     {
-                        if (status.Date == existingStatus.Date)
+                        var insert = true;
+                        foreach (var existingStatus in existingStatuses)
                         {
-                            insertNewStatus = false;
+                            if (status.Date == existingStatus.Date && status.Status == existingStatus.Status)
+                            {
+                                insert = false;
+                            }
                         }
-                    }
-                    if (insertNewStatus)
-                    {
-                        Create(status);
-                        _logger.LogInformation("New CoronsaStatus has been added");
+
+                        if (insert) _coronaStatuses.InsertOne(status);
                     }
                 }
             }

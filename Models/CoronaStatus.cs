@@ -10,13 +10,9 @@ namespace BeDudeApi.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        public decimal Confirmed { get; set; }
+        public decimal Cases  { get; set; }
 
-        public decimal Deaths { get; set; }
-
-        public decimal Recovered { get; set; }
-
-        public decimal Active { get; set; }
+        public string Status { get; set; }
 
         public string Date { get; set; }
 

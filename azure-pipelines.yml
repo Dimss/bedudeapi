@@ -6,14 +6,33 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+  - job: build dotnet core
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - bash: echo "DOTNET CORE BUILD"
+  - job: build reactjs
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - bash: echo "REACTJS BUILD"
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+
+
+
+#  - stage: B
+#    jobs:
+#      - job: B1
+#        steps: 
+#          - bash: echo "This is Job B1 at stage B"
+#      - job: B2
+#steps:
+#- script: echo Hello, world!
+#  displayName: 'Run a one-line script'
+#
+#- script: |
+#    echo Add other tasks to build, test, and deploy your project.
+#    echo See https://aka.ms/yaml
+#  displayName: 'Run a multi-line script'

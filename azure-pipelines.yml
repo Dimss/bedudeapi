@@ -12,8 +12,9 @@ jobs:
       vmImage: 'ubuntu-16.04'
     steps:
       - task: DotNetCoreCLI@2
-        command: build
-        arguments: -c Release
+        inputs:
+          command: 'build'
+          arguments: '-c Release'
 #  - job: build_reactjs
 #    pool:
 #      vmImage: 'ubuntu-16.04'

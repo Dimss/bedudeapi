@@ -18,10 +18,14 @@ namespace BeDudeApi
 
         public TimedLogger(ILogger logger) => _logger = logger;
 
-        public TimedLogger(ILoggerFactory loggerFactory) : this(new Logger<T>(loggerFactory)) { }
+        public TimedLogger(ILoggerFactory loggerFactory) : this(new Logger<T>(loggerFactory))
+        {
+        }
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) =>
-            _logger.Log(logLevel, eventId, state, exception, (s, ex) => $"[{DateTime.UtcNow:HH:mm:ss.fff}]: {formatter(s, ex)}");
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
+            Func<TState, Exception, string> formatter) =>
+            _logger.Log(logLevel, eventId, state, exception,
+                (s, ex) => $"[{DateTime.UtcNow:HH:mm:ss.fff}]: {formatter(s, ex)}");
 
         public bool IsEnabled(LogLevel logLevel) => _logger.IsEnabled(logLevel);
 
@@ -30,7 +34,6 @@ namespace BeDudeApi
 
     public class Startup
     {
-
         readonly string AllowCORS = "_allowCORS";
 
         public Startup(IConfiguration configuration)
@@ -43,18 +46,21 @@ namespace BeDudeApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CoronaStatusDatabaseSettings>(Configuration.GetSection(nameof(CoronaStatusDatabaseSettings)));
+            services.Configure<CoronaStatusDatabaseSettings>(
+                Configuration.GetSection(nameof(CoronaStatusDatabaseSettings)));
 
             services.AddSingleton<ICoronaStatusDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<CoronaStatusDatabaseSettings>>().Value);
 
             services.AddHostedService<DataLoaderBGService>();
 
-            services.AddCors(options => { options.AddPolicy(name: AllowCORS, builder => { builder.WithOrigins("*"); }); });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowCORS, builder => { builder.WithOrigins("*"); });
+            });
 
             // Custom loggin hack ?!
             services.Add(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(TimedLogger<>)));
-
 
 
             services.AddSingleton<CoronaStatusService>();
@@ -76,11 +82,10 @@ namespace BeDudeApi
             app.UseCors(AllowCORS);
 
             app.UseAuthorization();
+            
+            app.UseFileServer();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

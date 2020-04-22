@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using BeDudeApi.Services;
+using Microsoft.AspNetCore;
 
 namespace BeDudeApi
 {
@@ -16,8 +17,11 @@ namespace BeDudeApi
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            
+            
             InitDbIfNotInitiated(host);
             host.Run();
+
         }
 
         private static void InitDbIfNotInitiated(IHost host)
@@ -41,9 +45,6 @@ namespace BeDudeApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

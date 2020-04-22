@@ -9,5 +9,19 @@
     <PackageReference Include="System.Text.Json" Version="4.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\static" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\2.10201f46.chunk.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\2.10201f46.chunk.js.LICENSE.txt" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\2.10201f46.chunk.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\main.85d4ce54.chunk.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\main.85d4ce54.chunk.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\runtime-main.72bbefe2.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\runtime-main.72bbefe2.js.map" />
+  </ItemGroup>
+
 
 </Project>

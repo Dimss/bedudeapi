@@ -29,7 +29,9 @@ jobs:
       - checkout: bedudeui
       - task: Npm@1
         inputs:
-          command: npm i
+          command: custom
+          customCommand: npm run-script build
+          
 
   - job: build_dotnet_core
     pool:

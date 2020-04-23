@@ -1,5 +1,5 @@
 variables:
-  artifacts: "bin/Release/netcoreapp3.1/publish/"
+  artifacts: "bin/Release/netcoreapp3.1/publish"
 
 resources:
   repositories:
@@ -46,6 +46,7 @@ jobs:
           command: 'publish'
           arguments: '-c Release --output $(artifacts)'
           zipAfterPublish: false
+          modifyOutputPath: false
 #          arguments: '-c Release'
 
       - bash: "ls $(artifacts)"

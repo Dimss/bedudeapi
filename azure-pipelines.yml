@@ -37,7 +37,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: 'build'
-          artifactName: drop
+          artifactName: drop/ui
           
 
   - job: build_dotnet_core
@@ -52,7 +52,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: '$(artifacts)'
-          artifactName: drop
+          artifactName: drop/api
 #  - job: build_reactjs
 #    pool:
 #      vmImage: 'ubuntu-16.04'

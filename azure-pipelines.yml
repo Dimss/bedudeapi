@@ -13,22 +13,24 @@ trigger:
 
 jobs:
 
-  #  - job: build_bedudeui
-  #    pool:
-  #      vmImage: 'ubuntu-16.04'
-  #    steps:
-  #      - checkout: bedudeui
-  #      - task: Npm@1
-  #        inputs:
-  #          command: install
-  #      - task: Npm@1
-  #        inputs:
-  #          command: "custom"
-  #          customCommand: "run-script build"
-  #      - task: PublishBuildArtifacts@1
-  #        inputs:
-  #          pathToPublish: 'build'
-  #          artifactName: wwwroot
+    - job: build_bedudeui
+      pool:
+        vmImage: 'ubuntu-16.04'
+      steps:
+        - checkout: bedudeui
+        - task: Npm@1
+          taskDescription: "Install deps"
+          inputs:
+            command: install
+        - task: Npm@1
+          taskDescription: "Build bundle"
+          inputs:
+            command: "custom"
+            customCommand: "run-script build"
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathToPublish: 'build'
+            artifactName: wwwroot
 
 
   - job: build_dotnet_core

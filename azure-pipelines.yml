@@ -50,7 +50,7 @@ jobs:
       - bash: "ls -all" 
       - bash: "pwd" 
       - bash: "ls bin/Release/netcoreapp3.1/publish/"
-  " 
+ 
 #      - bash: "ls -all $(artifacts)" 
           
 #      - task: PublishBuildArtifacts@1

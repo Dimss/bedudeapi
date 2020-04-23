@@ -5,6 +5,7 @@
 
 variables:
   artifacts: bin/Release/netcoreapp3.1/publish/
+    
 
 trigger:
 - master
@@ -16,8 +17,7 @@ jobs:
     steps:
       - task: DotNetCoreCLI@2
         inputs:
-          command: 'build'
-          arguments: '-c Release'
+          command: 'publish'
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: $(artifacts)

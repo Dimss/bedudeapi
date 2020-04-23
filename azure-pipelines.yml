@@ -23,6 +23,17 @@ jobs:
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: 'arts'
+  
+  - job: job2
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - bash: mkdir arts2
+      - bash: echo "artifact1" > arts2/art1
+      - bash: echo "artifact2" > arts2/art2
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: 'arts2'
 
 #    - job: build_bedudeui
 #      pool:

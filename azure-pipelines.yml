@@ -78,6 +78,7 @@ jobs:
         inputs:
           artifactName: wwwroot
       
+      - bash: pwd
       - bash: ls -all
   
 #      - task: DotNetCoreCLI@2

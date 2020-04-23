@@ -1,5 +1,5 @@
 variables:
-  artifacts: "bin/Release/netcoreapp3.1/publish"
+  artifacts: "bin/Release/netcoreapp3.1/publish/"
 
 resources:
   repositories:
@@ -49,6 +49,8 @@ jobs:
 
       - bash: "ls -all" 
       - bash: "pwd" 
+      - bash: "ls artifacts: "bin/Release/netcoreapp3.1/publish/"
+  " 
 #      - bash: "ls -all $(artifacts)" 
           
 #      - task: PublishBuildArtifacts@1

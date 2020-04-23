@@ -47,7 +47,7 @@ jobs:
 #          arguments: '-c Release --output $(artifacts) '
           arguments: '-c Release'
 
-      - bash: "ls -all $(artifacts)" 
+      - bash: "ls -all" 
       - bash: "pwd" 
 #      - bash: "ls -all $(artifacts)" 
           

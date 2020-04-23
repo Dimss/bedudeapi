@@ -39,6 +39,7 @@ jobs:
       - task: DownloadBuildArtifacts@0
         inputs:
           artifactName: wwwroot
+          downloadPath: wwwroot
           
       - task: DotNetCoreCLI@2
         inputs:

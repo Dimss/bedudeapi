@@ -22,7 +22,7 @@ jobs:
           arguments: '-c Release'
       - task: PublishBuildArtifacts@1
         inputs:
-          pathToPublish: $(artifacts)
+          pathToPublish: '$(artifacts)'
           artifactName: drop
 #  - job: build_reactjs
 #    pool:

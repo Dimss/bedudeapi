@@ -14,18 +14,24 @@ resources:
       endpoint: Dimss
 
 
-  
-    
+
+
 
 trigger:
-- master
+  - master
 
 jobs:
-  - job: build_dotnet_core
+  
+  - job: get_js
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
       - checkout: bedudeui
+
+  - job: build_dotnet_core
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'publish'

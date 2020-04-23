@@ -48,6 +48,8 @@ jobs:
           arguments: '-c Release'
 
       - bash: "ls -all $(artifacts)" 
+      - bash: "pwd" 
+#      - bash: "ls -all $(artifacts)" 
           
 #      - task: PublishBuildArtifacts@1
 #        inputs:

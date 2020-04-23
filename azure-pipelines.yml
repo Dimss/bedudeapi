@@ -44,12 +44,10 @@ jobs:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'publish'
-#          arguments: '-c Release --output $(artifacts) '
-          arguments: '-c Release'
+          arguments: '-c Release --output $(artifacts) '
+#          arguments: '-c Release'
 
-      - bash: "ls -all" 
-      - bash: "pwd" 
-      - bash: "ls bin/Release/netcoreapp3.1"
+      - bash: "ls $(artifacts)"
  
 #      - bash: "ls -all $(artifacts)" 
           

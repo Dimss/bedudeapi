@@ -47,7 +47,7 @@ jobs:
 #          arguments: '-c Release --output $(artifacts) '
           arguments: '-c Release'
 
-      - bash: "ls -all" 
+      - bash: "ls -all $(artifacts)" 
           
 #      - task: PublishBuildArtifacts@1
 #        inputs:

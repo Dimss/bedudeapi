@@ -74,22 +74,19 @@ jobs:
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
+      
       - task: DownloadBuildArtifacts@0
         inputs:
           artifactName: wwwroot
           downloadPath: $(System.DefaultWorkingDirectory)
-      
-      - bash: pwd
-      - bash: ls -all
-      - bash: ls -all wwwroot
-  
-#      - task: DotNetCoreCLI@2
-#        inputs:
-#          command: 'publish'
-#          arguments: '-c Release --output $(artifacts)'
-#          zipAfterPublish: true
-#          modifyOutputPath: false
-#  
-#      - task: PublishBuildArtifacts@1
-#        inputs:
-#          pathToPublish: '$(artifacts)'
+
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'publish'
+          arguments: '-c Release --output $(artifacts)'
+          zipAfterPublish: true
+          modifyOutputPath: false
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(artifacts)'

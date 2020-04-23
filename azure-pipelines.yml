@@ -4,8 +4,8 @@
 # https://aka.ms/yaml
 
 variables:
-  artifacts: bin/Release/netcoreapp3.1/publish/
-             bin/Release/netcoreapp3.1
+  artifacts: "bin/Release/netcoreapp3.1/publish"
+  
     
 
 trigger:

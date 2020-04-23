@@ -34,6 +34,10 @@ jobs:
         inputs:
           command: "custom"
           customCommand: "run-script build"
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: 'build'
+          artifactName: drop
           
 
   - job: build_dotnet_core

@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 variables:
   artifacts: "bin/Release/netcoreapp3.1/publish"
 
@@ -12,10 +7,6 @@ resources:
       type: github
       name: Dimss/bedudeui
       endpoint: Dimss
-
-
-
-
 
 trigger:
   - master
@@ -45,6 +36,10 @@ jobs:
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          artifact: drop/ui
+          path: wwwroot
       - task: DotNetCoreCLI@2
         inputs:
           command: 'publish'
@@ -53,28 +48,3 @@ jobs:
         inputs:
           pathToPublish: '$(artifacts)'
           artifactName: drop/api
-#  - job: build_reactjs
-#    pool:
-#      vmImage: 'ubuntu-16.04'
-#    dependsOn: build_dotnet_core 
-#    steps:
-#      - bash: dotnet
-
-
-
-
-
-#  - stage: B
-#    jobs:
-#      - job: B1
-#        steps: 
-#          - bash: echo "This is Job B1 at stage B"
-#      - job: B2
-#steps:
-#- script: echo Hello, world!
-#  displayName: 'Run a one-line script'
-#
-#- script: |
-#    echo Add other tasks to build, test, and deploy your project.
-#    echo See https://aka.ms/yaml
-#  displayName: 'Run a multi-line script'

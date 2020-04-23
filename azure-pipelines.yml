@@ -40,7 +40,8 @@ jobs:
         inputs:
           artifactName: arts1
           downloadPath: $(System.DefaultWorkingDirectory)
-          
+      - bash: ls -all 
+      
       - bash: echo "artifact1" > arts2/art1-2
       - bash: echo "artifact2" > arts2/art2-2
       - task: PublishBuildArtifacts@1

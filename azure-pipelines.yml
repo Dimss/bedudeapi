@@ -32,8 +32,8 @@ jobs:
           command: install
       - task: Npm@1
         inputs:
-          command: Custom
-          customCommand: "npm run-script build"
+          command: "custom"
+          customCommand: "run-script build"
           
 
   - job: build_dotnet_core

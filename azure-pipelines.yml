@@ -29,8 +29,8 @@ jobs:
       - checkout: bedudeui
       - task: Npm@1
         inputs:
-          command: custom
-          customCommand: npm run-script build
+          command: install
+          
           
 
   - job: build_dotnet_core

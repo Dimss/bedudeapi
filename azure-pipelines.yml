@@ -5,6 +5,14 @@
 
 variables:
   artifacts: "bin/Release/netcoreapp3.1/publish"
+
+resources:
+  repositories:
+    - repository: bedudeui # The name used to reference this repository in the checkout step
+      type: github
+      name: https://github.com/Dimss/bedudeui
+
+
   
     
 
@@ -16,10 +24,11 @@ jobs:
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
+      - checkout: bedudeui
       - task: DotNetCoreCLI@2
         inputs:
           command: 'publish'
-          arguments: '-c Release --output $(artifacts)'
+          arguments: '-c Release --output $(artifacts) '
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: '$(artifacts)'

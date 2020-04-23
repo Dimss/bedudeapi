@@ -28,7 +28,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: 'build'
-          artifactName: drop/ui
+          artifactName: wwwroot
           
 
   - job: build_dotnet_core
@@ -39,7 +39,6 @@ jobs:
       - task: DownloadPipelineArtifact@2
         inputs:
           source: "current"
-          path: wwwroot
       - task: DotNetCoreCLI@2
         inputs:
           command: 'publish'

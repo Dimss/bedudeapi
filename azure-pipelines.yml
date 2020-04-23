@@ -32,7 +32,7 @@ jobs:
           
 
   - job: build_dotnet_core
-    dependsOn: "build_bedudeui"
+#    dependsOn: "build_bedudeui"
     pool:
       vmImage: 'ubuntu-16.04'
     steps:

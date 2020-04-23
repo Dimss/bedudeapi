@@ -81,6 +81,7 @@ jobs:
       
       - bash: pwd
       - bash: ls -all
+      - bash: wwwroot
   
 #      - task: DotNetCoreCLI@2
 #        inputs:

@@ -50,4 +50,4 @@ jobs:
 
       - task: PublishBuildArtifacts@1
         inputs:
-          pathToPublish: '$(artifacts)/publish.zip'
+          pathToPublish: '$(artifacts)'

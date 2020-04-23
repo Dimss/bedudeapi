@@ -49,6 +49,7 @@ jobs:
 #          arguments: '-c Release'
 
       - bash: "ls $(artifacts)"
+      - bash: "ls $(artifacts)/s"
  
 #      - bash: "ls -all $(artifacts)" 
           

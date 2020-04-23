@@ -12,42 +12,6 @@ trigger:
   - master
 
 jobs:
-#
-#  - job: job1
-#    pool:
-#      vmImage: 'ubuntu-16.04'
-#    steps:
-#      - bash: mkdir arts
-#      - bash: echo "artifact1" > arts/art1-1
-#      - bash: echo "artifact2" > arts/art2-1
-#      - task: PublishBuildArtifacts@1
-#        inputs:
-#          pathToPublish: 'arts'
-#          artifactName: arts1
-#  
-#  - job: job2
-#    
-#    pool:
-#      vmImage: 'ubuntu-16.04'
-#    
-#    dependsOn: job1
-#    
-#    steps:
-#      - bash: mkdir arts2
-#      
-#      - task: DownloadBuildArtifacts@0
-#        displayName: 'Download Build Artifacts'
-#        inputs:
-#          artifactName: arts1
-#          downloadPath: $(System.DefaultWorkingDirectory)/arts2
-#      - bash: ls -all 
-#      
-#      - bash: echo "artifact1" > arts2/art1-2
-#      - bash: echo "artifact2" > arts2/art2-2
-#      - task: PublishBuildArtifacts@1
-#        inputs:
-#          pathToPublish: 'arts2'
-
   - job: build_bedudeui
     pool:
       vmImage: 'ubuntu-16.04'

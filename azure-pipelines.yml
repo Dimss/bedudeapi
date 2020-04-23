@@ -45,12 +45,11 @@ jobs:
         inputs:
           command: 'publish'
           arguments: '-c Release --output $(artifacts)'
-          zipAfterPublish: false
+          zipAfterPublish: true
           modifyOutputPath: false
-#          arguments: '-c Release'
 
       - bash: "ls $(artifacts)"
-      - bash: "ls $(artifacts)/s"
+
  
 #      - bash: "ls -all $(artifacts)" 
           

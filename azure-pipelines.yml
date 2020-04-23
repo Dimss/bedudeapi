@@ -49,7 +49,7 @@ jobs:
 
       - bash: "ls -all" 
       - bash: "pwd" 
-      - bash: "ls bin"
+      - bash: "ls bin/Release"
  
 #      - bash: "ls -all $(artifacts)" 
           

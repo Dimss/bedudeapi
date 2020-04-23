@@ -4,8 +4,7 @@
 # https://aka.ms/yaml
 
 variables:
-  configuration: debug
-  platform: x64
+  artifacts: bin/Release/netcoreapp3.1/publish/
 
 trigger:
 - master
@@ -21,7 +20,7 @@ jobs:
           arguments: '-c Release'
       - task: PublishBuildArtifacts@1
         inputs:
-          pathToPublish: '$(Build.ArtifactStagingDirectory)'
+          pathToPublish: '${artifacts}'
           artifactName: drop
 #  - job: build_reactjs
 #    pool:

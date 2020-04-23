@@ -38,7 +38,7 @@ jobs:
     steps:
       - task: DownloadPipelineArtifact@2
         inputs:
-          artifact: drop
+          artifact: ui
           path: wwwroot
       - task: DotNetCoreCLI@2
         inputs:

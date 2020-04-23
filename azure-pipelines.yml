@@ -12,80 +12,81 @@ trigger:
   - master
 
 jobs:
-
-  - job: job1
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      - bash: mkdir arts
-      - bash: echo "artifact1" > arts/art1-1
-      - bash: echo "artifact2" > arts/art2-1
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: 'arts'
-          artifactName: arts1
-  
-  - job: job2
-    
-    pool:
-      vmImage: 'ubuntu-16.04'
-    
-    dependsOn: job1
-    
-    steps:
-      - bash: mkdir arts2
-      
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifacts'
-        inputs:
-          artifactName: arts1
-          downloadPath: $(System.DefaultWorkingDirectory)/arts2
-      - bash: ls -all 
-      
-      - bash: echo "artifact1" > arts2/art1-2
-      - bash: echo "artifact2" > arts2/art2-2
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: 'arts2'
-
-#    - job: build_bedudeui
-#      pool:
-#        vmImage: 'ubuntu-16.04'
-#      steps:
-#        - checkout: bedudeui
-#        - task: Npm@1
-#          displayName: "Install deps"
-#          inputs:
-#            command: install
-#        - task: Npm@1
-#          displayName: "Build bundle"
-#          inputs:
-#            command: "custom"
-#            customCommand: "run-script build"
-#        - task: PublishBuildArtifacts@1
-#          inputs:
-#            pathToPublish: 'build'
-#            artifactName: wwwroot
-            
-
-
-#  - job: build_dotnet_core
-#    dependsOn: "build_bedudeui"
+#
+#  - job: job1
 #    pool:
 #      vmImage: 'ubuntu-16.04'
 #    steps:
-#      #      - task: DownloadBuildArtifacts@0
-#      #        inputs:
-#      #          artifactName: wwwroot
-#      #          downloadPath: $(System.ArtifactsDirectory)
-#
+#      - bash: mkdir arts
+#      - bash: echo "artifact1" > arts/art1-1
+#      - bash: echo "artifact2" > arts/art2-1
+#      - task: PublishBuildArtifacts@1
+#        inputs:
+#          pathToPublish: 'arts'
+#          artifactName: arts1
+#  
+#  - job: job2
+#    
+#    pool:
+#      vmImage: 'ubuntu-16.04'
+#    
+#    dependsOn: job1
+#    
+#    steps:
+#      - bash: mkdir arts2
+#      
+#      - task: DownloadBuildArtifacts@0
+#        displayName: 'Download Build Artifacts'
+#        inputs:
+#          artifactName: arts1
+#          downloadPath: $(System.DefaultWorkingDirectory)/arts2
+#      - bash: ls -all 
+#      
+#      - bash: echo "artifact1" > arts2/art1-2
+#      - bash: echo "artifact2" > arts2/art2-2
+#      - task: PublishBuildArtifacts@1
+#        inputs:
+#          pathToPublish: 'arts2'
+
+  - job: build_bedudeui
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - checkout: bedudeui
+      - task: Npm@1
+        displayName: "Install deps"
+        inputs:
+          command: install
+      - task: Npm@1
+        displayName: "Build bundle"
+        inputs:
+          command: "custom"
+          customCommand: "run-script build"
+      - task: PublishBuildArtifacts@1
+        inputs:
+          artifactName: wwwroot
+          pathToPublish: 'build'
+  
+      
+  
+  - job: build_dotnet_core
+    dependsOn: "build_bedudeui"
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          artifactName: wwwroot
+      
+      - bash: ls -all
+  
 #      - task: DotNetCoreCLI@2
 #        inputs:
 #          command: 'publish'
 #          arguments: '-c Release --output $(artifacts)'
 #          zipAfterPublish: true
 #          modifyOutputPath: false
-#
+#  
 #      - task: PublishBuildArtifacts@1
 #        inputs:
 #          pathToPublish: '$(artifacts)'

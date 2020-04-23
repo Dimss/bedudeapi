@@ -45,6 +45,7 @@ jobs:
         inputs:
           command: 'publish'
           arguments: '-c Release --output $(artifacts)'
+          zipAfterPublish: false
 #          arguments: '-c Release'
 
       - bash: "ls $(artifacts)"

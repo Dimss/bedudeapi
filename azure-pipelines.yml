@@ -18,8 +18,8 @@ jobs:
       vmImage: 'ubuntu-16.04'
     steps:
       - bash: mkdir arts
-      - bash: echo "artifact1" > arts/art1
-      - bash: echo "artifact2" > arts/art2
+      - bash: echo "artifact1" > arts/art1-1
+      - bash: echo "artifact2" > arts/art2-1
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: 'arts'
@@ -29,8 +29,8 @@ jobs:
       vmImage: 'ubuntu-16.04'
     steps:
       - bash: mkdir arts2
-      - bash: echo "artifact1" > arts2/art1
-      - bash: echo "artifact2" > arts2/art2
+      - bash: echo "artifact1" > arts2/art1-2
+      - bash: echo "artifact2" > arts2/art2-2
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: 'arts2'

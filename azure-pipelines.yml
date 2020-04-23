@@ -39,7 +39,7 @@ jobs:
         displayName: 'Download Build Artifacts'
         inputs:
           artifactName: arts1
-          downloadPath: $(System.DefaultWorkingDirectory)
+          downloadPath: $(System.DefaultWorkingDirectory)/arts2
       - bash: ls -all 
       
       - bash: echo "artifact1" > arts2/art1-2

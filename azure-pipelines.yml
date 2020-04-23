@@ -11,6 +11,7 @@ resources:
     - repository: bedudeui # The name used to reference this repository in the checkout step
       type: github
       name: https://github.com/Dimss/bedudeui
+      endpoint: Dimss
 
 
   

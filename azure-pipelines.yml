@@ -10,47 +10,70 @@ resources:
 
 trigger:
   - master
+stages:
+  - stage: 'Build'
+    displayName: "Build API and UI"
+    jobs:
+      - job: build_bedudeui
+        pool:
+          vmImage: 'ubuntu-16.04'
+        steps:
+          - checkout: bedudeui
+          - task: Npm@1
+            displayName: "Install deps"
+            inputs:
+              command: install
+          - task: Npm@1
+            displayName: "Build bundle"
+            inputs:
+              command: "custom"
+              customCommand: "run-script build"
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: wwwroot
+              pathToPublish: 'build'
 
-jobs:
-  - job: build_bedudeui
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      - checkout: bedudeui
-      - task: Npm@1
-        displayName: "Install deps"
-        inputs:
-          command: install
-      - task: Npm@1
-        displayName: "Build bundle"
-        inputs:
-          command: "custom"
-          customCommand: "run-script build"
-      - task: PublishBuildArtifacts@1
-        inputs:
-          artifactName: wwwroot
-          pathToPublish: 'build'
-  
-      
-  
-  - job: build_dotnet_core
-    dependsOn: "build_bedudeui"
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      
-      - task: DownloadBuildArtifacts@0
-        inputs:
-          artifactName: wwwroot
-          downloadPath: $(System.DefaultWorkingDirectory)
+      - job: build_dotnet_core
+        dependsOn: "build_bedudeui"
+        pool:
+          vmImage: 'ubuntu-16.04'
+        steps:
 
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'publish'
-          arguments: '-c Release --output $(artifacts)'
-          zipAfterPublish: true
-          modifyOutputPath: false
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              artifactName: wwwroot
+              downloadPath: $(System.DefaultWorkingDirectory)
 
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: '$(artifacts)'
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'publish'
+              arguments: '-c Release --output $(artifacts)'
+              zipAfterPublish: true
+              modifyOutputPath: false
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: '$(artifacts)'
+
+  - stage: 'Deploy'
+    displayName: 'Deploy the web application'
+    dependsOn: Build
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: 'ubuntu-16.04'
+        environment: dev
+        variables:
+          - group: Release
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+                - task: AzureWebApp@1
+                  displayName: 'Azure App Service Deploy: website'
+                  inputs:
+                    azureSubscription: '$(SubName)'
+                    appName: '$(WebAppName)'
+                    package: '$(System.DefaultWorkingDirectory)/**/*.zip'

@@ -48,7 +48,7 @@ jobs:
         inputs:
           command: 'publish'
           arguments: '-c Release --output $(artifacts)'
-          zipAfterPublish: false
+          zipAfterPublish: true
           modifyOutputPath: false
 
       - task: PublishBuildArtifacts@1

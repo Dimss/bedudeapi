@@ -5,7 +5,7 @@ parameters:
   - name: azureSubscription
     displayName: Azure Subscription 
     type: string
-    default: "Visual Studio Enterprise Subscription"
+    default: "sub"
   - name: appName
     displayName: App Service name
     type: string

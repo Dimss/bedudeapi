@@ -1,19 +1,19 @@
 variables:
   artifacts: "bin/Release/netcoreapp3.1/publish"
 
-parameters:
-  - name: azureSubscription
-    displayName: Azure Subscription 
-    type: string
-    default: "sub"
-  - name: appName
-    displayName: App Service name
-    type: string
-    default: "bedude"
-  - name: package
-    displayName: Package location
-    type: string
-    default: "$(System.DefaultWorkingDirectory)/**/*.zip"
+#parameters:
+#  - name: azureSubscription
+#    displayName: Azure Subscription 
+#    type: string
+#    default: "sub"
+#  - name: appName
+#    displayName: App Service name
+#    type: string
+#    default: "bedude"
+#  - name: package
+#    displayName: Package location
+#    type: string
+#    default: "$(System.DefaultWorkingDirectory)/**/*.zip"
     
     
 resources:
@@ -70,23 +70,23 @@ stages:
             inputs:
               pathToPublish: '$(artifacts)'
 
-  - stage: 'Deploy'
-    displayName: 'Deploy the web application'
-    dependsOn: Build
-    jobs:
-      - deployment: Deploy
-        pool:
-          vmImage: 'ubuntu-16.04'
-        environment: dev
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - download: current
-                  artifact: drop
-                - task: AzureWebApp@1
-                  displayName: 'Azure App Service Deploy: website'
-                  inputs:
-                    azureSubscription: ${{ parameters.azureSubscription }}
-                    appName: ${{ parameters.appName }}
-                    package: ${{ parameters.package }}
+#  - stage: 'Deploy'
+#    displayName: 'Deploy the web application'
+#    dependsOn: Build
+#    jobs:
+#      - deployment: Deploy
+#        pool:
+#          vmImage: 'ubuntu-16.04'
+#        environment: dev
+#        strategy:
+#          runOnce:
+#            deploy:
+#              steps:
+#                - download: current
+#                  artifact: drop
+#                - task: AzureWebApp@1
+#                  displayName: 'Azure App Service Deploy: website'
+#                  inputs:
+#                    azureSubscription: ${{ parameters.azureSubscription }}
+#                    appName: ${{ parameters.appName }}
+#                    package: ${{ parameters.package }}
